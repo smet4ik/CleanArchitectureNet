@@ -4,8 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Application;
-using AutoMapper;
 using DataAccess;
+using DomainServices.Implementation;
+using DomainServices.Interfaces;
+using Email;
+using Infrastructure.Interfaces;
+using Infrastructure.Interfaces.Integrations;
+using Infrastructure.Interfaces.WebApp;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApp
@@ -22,12 +27,20 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+            //Domain
+            services.AddScoped<IOrderDomainService, OrderDomainService>();
             
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddDbContext<AppDbContext>(builder =>
+            //Infrastructure
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddDbContext<IDbContext, AppDbContext>(builder =>
                 builder.UseSqlite(Configuration.GetConnectionString("Sql")));
+            
+            //Application
+            services.AddScoped<IOrderService, OrderService>();
+
+            //Frameworks
+            services.AddControllers();
             services.AddAutoMapper(typeof(MapperProfile));
         }
 
