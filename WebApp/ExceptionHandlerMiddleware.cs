@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Application;
@@ -25,7 +22,7 @@ namespace WebApp
             {
                 await _next(httpContext);
             }
-            catch (EntityNotFoundException e)
+            catch (EntityNotFoundException)
             {
                 httpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
