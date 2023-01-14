@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainServices.Interfaces", "DomainServices.Interfaces\DomainServices.Interfaces.csproj", "{0CD0A322-FBA4-4B08-B0D6-2C1F053F45DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainServices.Inplementation", "DomainServices.Inplementation\DomainServices.Inplementation.csproj", "{79E5F94F-C8A7-4BCD-867D-6C4CC1ABC92E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainServices.Implementation", "DomainServices.Implementation\DomainServices.Implementation.csproj", "{79E5F94F-C8A7-4BCD-867D-6C4CC1ABC92E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

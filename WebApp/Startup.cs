@@ -27,7 +27,7 @@ namespace WebApp
             
             services.AddScoped<IOrderService, OrderService>();
             services.AddDbContext<AppDbContext>(builder =>
-                builder.UseSqlServer(Configuration.GetConnectionString("MsSql")));
+                builder.UseSqlite(Configuration.GetConnectionString("Sql")));
             services.AddAutoMapper(typeof(MapperProfile));
         }
 
