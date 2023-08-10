@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Domain.Entities;
+using Domain.Models;
 using DomainServices.Interfaces;
 
 namespace DomainServices.Implementation

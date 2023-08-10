@@ -19,7 +19,7 @@ namespace UseCases.Order.Commands.CreateOrder
 
         public async Task<int> Handle(CreateOrderCommand command, CancellationToken cancellationToken)
         {
-            var order = _mapper.Map<Domain.Entities.Order>(command.Dto);
+            var order = _mapper.Map<Domain.Models.Order>(command.Dto);
             _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync(cancellationToken);
             return order.Id;

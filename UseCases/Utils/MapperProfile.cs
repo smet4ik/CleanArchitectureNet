@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Domain.Entities;
+using Domain.Models;
 using UseCases.Order.Dto;
 
 namespace UseCases.Utils
@@ -8,8 +8,8 @@ namespace UseCases.Utils
     {
         public MapperProfile()
         {
-            CreateMap<Domain.Entities.Order, OrderDto>();
-            CreateMap<CreateOrderDto, Domain.Entities.Order>();
+            CreateMap<Domain.Models.Order, OrderDto>();
+            CreateMap<CreateOrderDto, Domain.Models.Order>();
             CreateMap<OrderItemDto, OrderItem>();
         }
     }

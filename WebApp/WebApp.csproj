@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationServices.Implementation\ApplicationServices.Implementation.csproj" />
-    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\DataAccess.MsSql\DataAccess.MsSql.csproj" />
     <ProjectReference Include="..\DomainServices.Implementation\DomainServices.Implementation.csproj" />
     <ProjectReference Include="..\Infrastructure.Implementation\Email.Implementation\Email.Implementation.csproj" />
     <ProjectReference Include="..\Infrastructure.Interfaces\Infrastructure.Interfaces.csproj" />
