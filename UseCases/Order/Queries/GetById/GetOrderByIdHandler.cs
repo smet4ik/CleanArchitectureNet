@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using DataAccess.Interfaces;
+using Delivery.Interfaces;
 using DomainServices.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +15,18 @@ namespace UseCases.Order.Queries.GetById
         private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IOrderDomainService _orderDomainService;
+        private readonly IDeliveryService _deliveryService;
 
         public GetOrderByIdHandler(
-            IDbContext dbContext, IMapper mapper, IOrderDomainService orderDomainService)
+            IDbContext dbContext,
+            IMapper mapper,
+            IOrderDomainService orderDomainService,
+            IDeliveryService deliveryService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _orderDomainService = orderDomainService;
+            _deliveryService = deliveryService;
         }
 
         public async Task<OrderDto> Handle(GetOrderByIdQuery query, CancellationToken cancellationToken)
@@ -33,7 +39,7 @@ namespace UseCases.Order.Queries.GetById
             if (order == null) throw new EntityNotFoundException();
 
             var dto = _mapper.Map<OrderDto>(order);
-            dto.Total = _orderDomainService.GetTotal(order);
+            dto.Total = _orderDomainService.GetTotal(order, _deliveryService.CalculateDeliveryCost);
 
             return dto;
         }

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using UseCases.Order.Commands.CreateOrder;
 using UseCases.Order.Dto;
 using UseCases.Order.Queries.GetById;

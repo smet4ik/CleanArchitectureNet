@@ -5,7 +5,7 @@ using Domain.Enums;
 using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccess
+namespace DataAccess.InMemory
 {
     public class AppDbContext : DbContext, IDbContext
     {

@@ -22,7 +22,7 @@ namespace WebApp.Services
             {
                 await _next(httpContext);
             }
-            catch (EntityNotFoundException e)
+            catch (EntityNotFoundException)
             {
                 httpContext.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
