@@ -12,6 +12,6 @@ namespace DataAccess.Interfaces
         DbSet<Product> Products { get; }
         DbSet<OrderItem> OrderItems { get;  }
 
-        Task<int> SaveChangesAsync(CancellationToken token);
+        Task<int> SaveChangesAsync(CancellationToken token = default);
     }
 }

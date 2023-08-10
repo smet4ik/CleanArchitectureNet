@@ -1,33 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using DataAccess;
+using DataAccess.Interfaces;
 using DomainServices.Interfaces;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using UseCases.Order.Dto;
 
-namespace Application
+namespace UseCases.Order.Queries.GetById
 {
-    public class OrderService : IOrderService
+    public class GetOrderByIdHandler : IRequestHandler<GetOrderByIdQuery, OrderDto>
     {
-        private readonly AppDbContext _dbContext;
+        private readonly IDbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly IOrderDomainService _orderDomainService;
 
-        public OrderService(AppDbContext dbContext, IMapper mapper, IOrderDomainService orderDomainService)
+        public GetOrderByIdHandler(
+            IDbContext dbContext, IMapper mapper, IOrderDomainService orderDomainService)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _orderDomainService = orderDomainService;
         }
-        public async Task<OrderDto> GetByIdAsync(int id)
+
+        public async Task<OrderDto> Handle(GetOrderByIdQuery query, CancellationToken cancellationToken)
         {
             var order = await _dbContext.Orders
                 .AsNoTracking()
                 .Include(x => x.Items).ThenInclude(x => x.Product)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .FirstOrDefaultAsync(x => x.Id == query.Id, cancellationToken);
 
             if (order == null) throw new EntityNotFoundException();
 
