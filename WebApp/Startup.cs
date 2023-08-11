@@ -1,3 +1,4 @@
+using System;
 using ApplicationServices.Implementation;
 using ApplicationServices.Interfaces;
 using AutoMapper;
@@ -9,6 +10,8 @@ using DomainServices.Implementation;
 using DomainServices.Interfaces;
 using Email.Implementation;
 using Email.Interfaces;
+using Hangfire;
+using Hangfire.Storage.SQLite;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +19,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using UseCases.BackgroundJobs;
 using UseCases.Order.Commands.CreateOrder;
 using UseCases.Utils;
 using WebApp.Interfaces;
@@ -42,6 +46,7 @@ namespace WebApp
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IDeliveryService, DeliveryService>();
+            services.AddScoped<IBackgroundJobService, BackgroundJobService>();
             services.AddDbContext<IDbContext, AppDbContext>(builder =>
                 builder.UseSqlite(Configuration.GetConnectionString("SqlLite")));
             //Application
@@ -51,6 +56,8 @@ namespace WebApp
             //Frameworks
             services.AddControllers();
             services.AddAutoMapper(typeof(MapperProfile));
+            services.AddHangfire(h => h.UseSQLiteStorage());
+            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +79,14 @@ namespace WebApp
             {
                 endpoints.MapControllers();
             });
+
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
+            RecurringJob
+                .AddOrUpdate<UpdateDeliveryStatusJob>(
+                    "UpdateDeliveryStatusJob",
+                    job => job.ExecuteAsync(), 
+                    Cron.Minutely);
         }
     }
 }

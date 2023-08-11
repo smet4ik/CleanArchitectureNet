@@ -1,4 +1,5 @@
-﻿using Delivery.Interfaces;
+﻿using System.Threading.Tasks;
+using Delivery.Interfaces;
 
 namespace Delivery.DHL
 {
@@ -7,6 +8,11 @@ namespace Delivery.DHL
         public decimal CalculateDeliveryCost(double weight)
         {
             return (decimal)(weight * 10);
+        }
+
+        public Task<bool> IsDeliveredAsync(int orderId)
+        {
+            return Task.FromResult(orderId % 2 == 0);
         }
     }
 }

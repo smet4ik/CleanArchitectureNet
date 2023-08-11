@@ -4,6 +4,7 @@
     {
         Created,
         Completed,
-        Canceled
+        Canceled,
+        Delivered,
     }
 }
